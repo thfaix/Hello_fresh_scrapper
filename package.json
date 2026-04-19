@@ -1,0 +1,11 @@
+{
+  "name": "hello-fresh-scrapper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "JavaScript tools to extract HelloFresh frontend API metadata from Next.js pages.",
+  "scripts": {
+    "test": "node --test",
+    "extract": "node src/cli.js"
+  }
+}
