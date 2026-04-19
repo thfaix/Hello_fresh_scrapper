@@ -6,6 +6,7 @@ import {
   fetchJson,
   fetchPageHtml,
 } from './extractor.js';
+import { getKnownParameterProfiles } from './profiles.js';
 
 function parseArgs(argv) {
   const args = {
@@ -53,6 +54,11 @@ async function main() {
       internalRewrites: bootstrap.internalRewrites,
       gatewayRoutes: bootstrap.gatewayRoutes,
     }, null, 2));
+    return;
+  }
+
+  if (args.endpoint === 'profiles') {
+    console.log(JSON.stringify(getKnownParameterProfiles(), null, 2));
     return;
   }
 

@@ -37,6 +37,12 @@ npm run extract -- --endpoint weeks --country US --locale en-US --brand hellofre
 npm run extract -- --endpoint menus --country US --weeks 2026-W18 --locale en-US --take 1
 ```
 
+### Print curated parameter profiles
+
+```bash
+npm run extract -- --endpoint profiles
+```
+
 ## Exact parameter mapping observed so far
 
 ## `/gw/menus-service/weeks`
@@ -45,9 +51,20 @@ Observed behavior:
 
 - no query params → `200`, but `{"weeks":[]}`
 - `country=US` → `200`, returns populated weeks
-- `locale=en-US` is accepted
-- `brand=hellofresh` is accepted
+- `locale=en-US` alone → `200`, but still empty
+- `brand=hellofresh` alone → `200`, but still empty
+- `country=US&locale=en-US` → populated
+- `country=US&brand=hellofresh` → populated
+- `country=DE&locale=de-DE` → populated in live test
 - `country` is the practical minimum useful param
+
+Parameter profile:
+
+| Param | Effect | Notes |
+|---|---|---|
+| `country` | required for non-empty data | Without it, endpoint still returns `200` but `weeks` is empty |
+| `locale` | optional | Accepted; does not make the response useful by itself |
+| `brand` | optional | Accepted; does not make the response useful by itself |
 
 Recommended form:
 
@@ -60,16 +77,32 @@ Recommended form:
 Observed behavior:
 
 - no `country` → `400` with `country cannot be empty`
-- `country=US` alone → `200`, huge mixed result set across weeks/products
-- `weeks=2026-W18` narrows results to one week
+- `country=US` alone → `200`, huge mixed result set across weeks/products (`total=7189` in the live probe)
+- `weeks=2026-W18` narrows results to one week (`total=15` in the live probe)
+- `locale=en-US` is accepted
+- `brand=hellofresh` is accepted
 - `take` works for pagination / limiting
 - `skip` works for pagination offset
-- `product=classic-menu` works
-- `products=classic-menu` also works
-- `productSku=US-CB-3-2-0` works
-- `locale=en-US` is accepted
-- `brand` is supported by the builder even if not strictly required in current tests
+- `product=classic-menu` works and narrows to the matching menu family
+- `products=classic-menu` also works in the same way in live tests
+- `productSku=US-CB-3-2-0` works and narrows to matching items
 - `exclude=recipes.category,recipes.nutrition,recipes.steps` is accepted, but in current live checks those nested recipe fields still appeared in the payload
+- `product=family` and `products=family` returned empty result sets in the tested week
+
+Parameter profile:
+
+| Param | Effect | Notes |
+|---|---|---|
+| `country` | required | Without it, request fails with `400` |
+| `weeks` | strong filter | Best lever to shrink the dataset to one week |
+| `locale` | optional | Accepted; no visible structural change in tested responses |
+| `brand` | optional | Accepted; no visible structural change in tested responses |
+| `take` | pagination limit | Changes `count`, keeps `total` |
+| `skip` | pagination offset | Moves the item window |
+| `product` | filter | Works with values like `classic-menu` |
+| `products` | filter | Behaved like `product` in tested requests |
+| `productSku` | filter | Restricts to items carrying the SKU |
+| `exclude` | accepted but no visible change | Nested recipe fields still present in live payload |
 
 Recommended form:
 
