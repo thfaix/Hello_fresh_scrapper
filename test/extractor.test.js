@@ -13,12 +13,12 @@ const sampleHtmlPath = new URL('./fixtures/sample-hellofresh-page.html', import.
 const sampleHtml = await import('node:fs/promises').then(({ readFile }) => readFile(sampleHtmlPath, 'utf8'));
 
 test('extractAssetScriptUrls resolves Next.js assets against a base URL', () => {
-  const html = `<!doctype html><script src="/_next/static/chunks/main.js"></script><script src="https://www.hellofresh.com/_next/static/chunks/page.js"></script>`;
-  const result = extractAssetScriptUrls(html, 'https://www.hellofresh.com/plans');
+  const html = `<!doctype html><script src="/_next/static/chunks/main.js"></script><script src="https://www.hellofresh.lu/_next/static/chunks/page.js"></script>`;
+  const result = extractAssetScriptUrls(html, 'https://www.hellofresh.lu/plans');
 
   assert.deepEqual(result, [
-    'https://www.hellofresh.com/_next/static/chunks/main.js',
-    'https://www.hellofresh.com/_next/static/chunks/page.js',
+    'https://www.hellofresh.lu/_next/static/chunks/main.js',
+    'https://www.hellofresh.lu/_next/static/chunks/page.js',
   ]);
 });
 
@@ -50,34 +50,34 @@ test('extractServerBootstrap reads token, rewrites, and gateway routes from __NE
 });
 
 test('buildWeeksUrl includes only provided query params', () => {
-  const url = buildWeeksUrl('https://www.hellofresh.com', {
-    country: 'US',
-    locale: 'en-US',
+  const url = buildWeeksUrl('https://www.hellofresh.lu', {
+    country: 'LU',
+    locale: 'en-LU',
     brand: 'hellofresh',
   });
 
   assert.equal(
     url,
-    'https://www.hellofresh.com/gw/menus-service/weeks?country=US&locale=en-US&brand=hellofresh',
+    'https://www.hellofresh.lu/gw/menus-service/weeks?country=LU&locale=en-LU&brand=hellofresh',
   );
 });
 
 test('buildMenusUrl requires country and supports mapped menu filters', () => {
-  assert.throws(() => buildMenusUrl('https://www.hellofresh.com', {}), /country is required/);
+  assert.throws(() => buildMenusUrl('https://www.hellofresh.lu', {}), /country is required/);
 
-  const url = buildMenusUrl('https://www.hellofresh.com', {
-    country: 'US',
+  const url = buildMenusUrl('https://www.hellofresh.lu', {
+    country: 'LU',
     weeks: '2026-W18',
-    locale: 'en-US',
+    locale: 'en-LU',
     exclude: 'recipes.category,recipes.nutrition,recipes.steps',
     take: 1,
     skip: 0,
     product: 'classic-menu',
-    productSku: 'US-CB-3-2-0',
+    productSku: 'LU-CB-3-2-0',
   });
 
   assert.equal(
     url,
-    'https://www.hellofresh.com/gw/menus-service/menus?country=US&weeks=2026-W18&locale=en-US&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1&skip=0&product=classic-menu&productSku=US-CB-3-2-0',
+    'https://www.hellofresh.lu/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1&skip=0&product=classic-menu&productSku=LU-CB-3-2-0',
   );
 });

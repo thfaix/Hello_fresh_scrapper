@@ -85,11 +85,7 @@ export function buildMenusUrl(baseUrl, options = {}) {
 }
 
 export async function fetchPageHtml(pageUrl, fetchImpl = fetch) {
-  const response = await fetchImpl(pageUrl, {
-    headers: {
-      'user-agent': 'Mozilla/5.0 (compatible; HelloFreshScrapper/0.1; +https://github.com/thfaix/Hello_fresh_scrapper)',
-    },
-  });
+  const response = await fetchImpl(pageUrl, {});
 
   if (!response.ok) {
     throw new Error(`Failed to fetch page HTML: ${response.status} ${response.statusText}`);
@@ -103,7 +99,6 @@ export async function fetchJson(url, accessToken, fetchImpl = fetch) {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       Accept: 'application/json',
-      'user-agent': 'Mozilla/5.0 (compatible; HelloFreshScrapper/0.1; +https://github.com/thfaix/Hello_fresh_scrapper)',
     },
   });
 

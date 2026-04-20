@@ -12,7 +12,7 @@ import { getKnownResponseShapes } from './response-shapes.js';
 
 function parseArgs(argv) {
   const args = {
-    page: 'https://www.hellofresh.com/plans',
+    page: 'https://www.hellofresh.lu/plans',
     endpoint: 'bootstrap',
     country: undefined,
     locale: undefined,

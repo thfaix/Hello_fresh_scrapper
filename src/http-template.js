@@ -1,7 +1,7 @@
 export function renderHttpFile() {
-  return `@baseUrl = https://www.hellofresh.com
-@country = US
-@locale = en-US
+  return `@baseUrl = https://www.hellofresh.lu
+@country = LU
+@locale = en-LU
 @brand = hellofresh
 @week = 2026-W18
 @token = REPLACE_WITH_BEARER_TOKEN
@@ -26,7 +26,7 @@ Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Menus filtered by product and SKU
-GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&product=classic-menu&productSku=US-CB-3-2-0&take=1
+GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&product=classic-menu&productSku=LU-CB-3-2-0&take=1
 Authorization: Bearer {{token}}
 Accept: application/json
 

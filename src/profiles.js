@@ -10,12 +10,12 @@ const KNOWN_PARAMETER_PROFILES = {
     params: {
       country: {
         effect: 'required_for_non_empty_data',
-        observedWith: 'country=US',
+        observedWith: 'country=LU',
         observedResult: 'weeks array populated',
       },
       locale: {
         effect: 'optional',
-        observedWith: 'locale=en-US',
+        observedWith: 'locale=en-LU',
         observedResult: 'accepted; still empty without country, populated with country',
       },
       brand: {
@@ -38,7 +38,7 @@ const KNOWN_PARAMETER_PROFILES = {
     params: {
       country: {
         effect: 'required',
-        observedWith: 'country=US',
+        observedWith: 'country=LU',
         observedResult: '200 response; broad mixed dataset',
       },
       weeks: {
@@ -48,7 +48,7 @@ const KNOWN_PARAMETER_PROFILES = {
       },
       locale: {
         effect: 'optional',
-        observedWith: 'locale=en-US',
+        observedWith: 'locale=en-LU',
         observedResult: 'accepted; no visible structural change in tested responses',
       },
       brand: {
