@@ -15,7 +15,7 @@ const KNOWN_PARAMETER_PROFILES = {
       },
       locale: {
         effect: 'optional',
-        observedWith: 'locale=en-LU',
+        observedWith: 'locale=en-GB',
         observedResult: 'accepted; still empty without country, populated with country',
       },
       brand: {
@@ -48,7 +48,7 @@ const KNOWN_PARAMETER_PROFILES = {
       },
       locale: {
         effect: 'optional',
-        observedWith: 'locale=en-LU',
+        observedWith: 'locale=en-GB',
         observedResult: 'accepted; no visible structural change in tested responses',
       },
       brand: {

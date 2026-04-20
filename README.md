@@ -28,13 +28,13 @@ npm run extract -- --endpoint bootstrap
 ### Fetch available weeks
 
 ```bash
-npm run extract -- --endpoint weeks --country LU --locale en-LU --brand hellofresh
+npm run extract -- --endpoint weeks --country LU --locale en-GB --brand hellofresh
 ```
 
 ### Fetch menus
 
 ```bash
-npm run extract -- --endpoint menus --country LU --weeks 2026-W18 --locale en-LU --take 1
+npm run extract -- --endpoint menus --country LU --weeks 2026-W18 --locale en-GB --take 1
 ```
 
 ### Fetch only the bearer token
@@ -85,9 +85,9 @@ Observed behavior:
 
 - no query params → `200`, but `{"weeks":[]}`
 - `country=LU` → `200`, returns populated weeks
-- `locale=en-LU` alone → `200`, but still empty
+- `locale=en-GB` alone → `200`, but still empty
 - `brand=hellofresh` alone → `200`, but still empty
-- `country=LU&locale=en-LU` → populated
+- `country=LU&locale=en-GB` → populated
 - `country=LU&brand=hellofresh` → populated
 - `country=DE&locale=de-DE` → populated in live test
 - `country` is the practical minimum useful param
@@ -103,7 +103,7 @@ Parameter profile:
 Recommended form:
 
 ```text
-/gw/menus-service/weeks?country=LU&locale=en-LU&brand=hellofresh
+/gw/menus-service/weeks?country=LU&locale=en-GB&brand=hellofresh
 ```
 
 ## `/gw/menus-service/menus`
@@ -113,7 +113,7 @@ Observed behavior:
 - no `country` → `400` with `country cannot be empty`
 - `country=LU` alone → `200`, huge mixed result set across weeks/products (`total=7189` in the live probe)
 - `weeks=2026-W18` narrows results to one week (`total=15` in the live probe)
-- `locale=en-LU` is accepted
+- `locale=en-GB` is accepted
 - `brand=hellofresh` is accepted
 - `take` works for pagination / limiting
 - `skip` works for pagination offset
@@ -141,13 +141,13 @@ Parameter profile:
 Recommended form:
 
 ```text
-/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&take=1
+/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-GB&take=1
 ```
 
 More selective example:
 
 ```text
-/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&product=classic-menu&productSku=LU-CB-3-2-0&take=1
+/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-GB&product=classic-menu&productSku=LU-CB-3-2-0&take=1
 ```
 
 ## Observed response shapes

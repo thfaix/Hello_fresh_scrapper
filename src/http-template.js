@@ -1,7 +1,7 @@
 export function renderHttpFile() {
   return `@baseUrl = https://www.hellofresh.lu
 @country = LU
-@locale = en-LU
+@locale = en-GB
 @brand = hellofresh
 @week = 2026-W18
 @token = REPLACE_WITH_BEARER_TOKEN

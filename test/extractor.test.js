@@ -52,13 +52,13 @@ test('extractServerBootstrap reads token, rewrites, and gateway routes from __NE
 test('buildWeeksUrl includes only provided query params', () => {
   const url = buildWeeksUrl('https://www.hellofresh.lu', {
     country: 'LU',
-    locale: 'en-LU',
+    locale: 'en-GB',
     brand: 'hellofresh',
   });
 
   assert.equal(
     url,
-    'https://www.hellofresh.lu/gw/menus-service/weeks?country=LU&locale=en-LU&brand=hellofresh',
+    'https://www.hellofresh.lu/gw/menus-service/weeks?country=LU&locale=en-GB&brand=hellofresh',
   );
 });
 
@@ -68,7 +68,7 @@ test('buildMenusUrl requires country and supports mapped menu filters', () => {
   const url = buildMenusUrl('https://www.hellofresh.lu', {
     country: 'LU',
     weeks: '2026-W18',
-    locale: 'en-LU',
+    locale: 'en-GB',
     exclude: 'recipes.category,recipes.nutrition,recipes.steps',
     take: 1,
     skip: 0,
@@ -78,6 +78,6 @@ test('buildMenusUrl requires country and supports mapped menu filters', () => {
 
   assert.equal(
     url,
-    'https://www.hellofresh.lu/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1&skip=0&product=classic-menu&productSku=LU-CB-3-2-0',
+    'https://www.hellofresh.lu/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-GB&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1&skip=0&product=classic-menu&productSku=LU-CB-3-2-0',
   );
 });

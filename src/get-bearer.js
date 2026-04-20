@@ -4,7 +4,7 @@ import { fetchPageHtml } from './extractor.js';
 
 function parseArgs(argv) {
   const args = {
-    page: 'https://www.hellofresh.com/plans',
+    page: 'https://www.hellofresh.lu/plans',
     raw: false,
   };
 

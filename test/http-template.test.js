@@ -8,7 +8,7 @@ test('renderHttpFile creates a usable HF_api.http template with shared variables
 
   assert.match(output, /^@baseUrl = https:\/\/www\.hellofresh\.lu/m);
   assert.match(output, /^@country = LU/m);
-  assert.match(output, /^@locale = en-LU/m);
+  assert.match(output, /^@locale = en-GB/m);
   assert.match(output, /^@brand = hellofresh/m);
   assert.match(output, /^@week = 2026-W18/m);
   assert.match(output, /^@token = REPLACE_WITH_BEARER_TOKEN/m);

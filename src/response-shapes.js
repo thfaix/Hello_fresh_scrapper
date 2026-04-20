@@ -82,7 +82,7 @@ const KNOWN_RESPONSE_SHAPES = {
     cuisineKeys: ['id', 'name', 'slug', 'type'],
     tagKeys: ['id', 'name', 'slug', 'type', 'displayLabel', 'colorHandle', 'preferences'],
     notes: {
-      itemProbe: 'country=LU&weeks=2026-W18&locale=en-LU&product=classic-menu&productSku=LU-CB-3-2-0&take=1',
+      itemProbe: 'country=LU&weeks=2026-W18&locale=en-GB&product=classic-menu&productSku=LU-CB-3-2-0&take=1',
       ingredientsObservedState: 'empty_array_in_live_probe',
       stepsObservedState: 'empty_array_in_live_probe',
       yieldsObservedState: 'empty_array_in_live_probe',
