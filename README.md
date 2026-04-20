@@ -43,6 +43,22 @@ npm run extract -- --endpoint menus --country US --weeks 2026-W18 --locale en-US
 npm run extract -- --endpoint profiles
 ```
 
+### Print curated response shapes
+
+```bash
+npm run extract -- --endpoint shapes
+```
+
+### Print the HTTP request collection
+
+```bash
+npm run extract -- --endpoint http
+npm run generate:http
+```
+
+Generated file:
+- `HF_api.http`
+
 ## Exact parameter mapping observed so far
 
 ## `/gw/menus-service/weeks`
@@ -116,7 +132,113 @@ More selective example:
 /gw/menus-service/menus?country=US&weeks=2026-W18&locale=en-US&product=classic-menu&productSku=US-CB-3-2-0&take=1
 ```
 
-## Notes
+## Observed response shapes
+
+### `weeks`
+Top-level shape:
+- `weeks`
+
+Observed sample:
+- first week: `2026-W17`
+
+### `menus`
+Top-level shape:
+- `items`
+- `take`
+- `skip`
+- `count`
+- `total`
+
+Observed `items[0]` keys:
+- `id`
+- `country`
+- `product`
+- `productSKUs`
+- `week`
+- `headline`
+- `isActive`
+- `isComplete`
+- `isReadOnly`
+- `serializedPreferences`
+- `preferences`
+- `courses`
+- `modularity`
+- `surveyTitle`
+- `surveyQuestion`
+- `surveyBody`
+- `surveyOptIn`
+- `averageRating`
+- `rated`
+- `link`
+- `createdAt`
+- `updatedAt`
+- `clonedFrom`
+- `mealSwapCombinations`
+- `mealSwapCombinationsText`
+
+Observed `courses[0]` keys:
+- `index`
+- `recipe`
+- `selectionLimit`
+- `isSoldOut`
+- `hideOnSoldOut`
+- `soldOutThreshold`
+- `chargeSetting`
+- `isHidden`
+- `sections`
+- `presets`
+- `shoppingSegments`
+- `shoppableProductId`
+
+Observed `recipe` keys:
+- `active`
+- `averageRating`
+- `category`
+- `country`
+- `cuisines`
+- `difficulty`
+- `favoritesCount`
+- `headline`
+- `id`
+- `imageLink`
+- `imagePath`
+- `ingredients`
+- `isPublished`
+- `label`
+- `name`
+- `nutrition`
+- `prepTime`
+- `ratingsCount`
+- `slug`
+- `steps`
+- `tags`
+- `totalTime`
+- `uuid`
+- `websiteUrl`
+- `yields`
+
+Observed nested shapes:
+- `category`: `{ id, name, slug, type }`
+- `cuisines[]`: `{ id, name, slug, type }`
+- `tags[]`: `{ id, name, slug, type, displayLabel, colorHandle, preferences }`
+- `nutrition[]`: `{ type, name, amount, unit }`
+
+Live-probe caveat:
+- in the tested payload, `ingredients`, `steps`, and `yields` were present as keys but empty arrays
+- `nutrition` was populated
+
+## HTTP collection
+
+A ready-to-use request collection is generated at:
+- `HF_api.http`
+
+It contains:
+- bootstrap page request
+- recommended `weeks` request
+- recommended `menus` request
+- filtered `menus` request by `product` and `productSku`
+- pagination example
+- `exclude` example
 
 - this is **not** an official public API
 - the SSR token may be ephemeral

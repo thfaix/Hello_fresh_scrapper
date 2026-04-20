@@ -6,7 +6,9 @@ import {
   fetchJson,
   fetchPageHtml,
 } from './extractor.js';
+import { renderHttpFile } from './http-template.js';
 import { getKnownParameterProfiles } from './profiles.js';
+import { getKnownResponseShapes } from './response-shapes.js';
 
 function parseArgs(argv) {
   const args = {
@@ -59,6 +61,16 @@ async function main() {
 
   if (args.endpoint === 'profiles') {
     console.log(JSON.stringify(getKnownParameterProfiles(), null, 2));
+    return;
+  }
+
+  if (args.endpoint === 'shapes') {
+    console.log(JSON.stringify(getKnownResponseShapes(), null, 2));
+    return;
+  }
+
+  if (args.endpoint === 'http') {
+    console.log(renderHttpFile());
     return;
   }
 

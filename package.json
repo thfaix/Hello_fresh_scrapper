@@ -6,6 +6,7 @@
   "description": "JavaScript tools to extract HelloFresh frontend API metadata from Next.js pages.",
   "scripts": {
     "test": "node --test",
-    "extract": "node src/cli.js"
+    "extract": "node src/cli.js",
+    "generate:http": "node src/generate-http-file.js"
   }
 }
