@@ -4,37 +4,42 @@
 @brand = hellofresh
 @week = 2026-W18
 @token = REPLACE_WITH_BEARER_TOKEN
+@jsonAccept = application/json
+@plansPage = {{baseUrl}}/plans
+@weeksPath = {{baseUrl}}/gw/menus-service/weeks?country={{country}}&locale={{locale}}&brand={{brand}}
+@weeksCountryOnlyPath = {{baseUrl}}/gw/menus-service/weeks?country={{country}}
+@menusBase = {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}
 
 ### Bootstrap page
-GET {{baseUrl}}/plans
+GET {{plansPage}}
 Accept: text/html
 
 ### Weeks (recommended)
-GET {{baseUrl}}/gw/menus-service/weeks?country={{country}}&locale={{locale}}&brand={{brand}}
+GET {{weeksPath}}
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}
 
 ### Weeks (country only)
-GET {{baseUrl}}/gw/menus-service/weeks?country={{country}}
+GET {{weeksCountryOnlyPath}}
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}
 
 ### Menus (recommended)
-GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&take=1
+GET {{menusBase}}&take=1
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}
 
 ### Menus filtered by product and SKU
-GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&product=classic-menu&productSku=US-CB-3-2-0&take=1
+GET {{menusBase}}&product=classic-menu&productSku=LU-CB-3-2-0&take=1
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}
 
 ### Menus with pagination
-GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&take=1&skip=1
+GET {{menusBase}}&take=1&skip=1
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}
 
 ### Menus with explicit exclude flag (accepted, but live impact not confirmed)
-GET {{baseUrl}}/gw/menus-service/menus?country={{country}}&weeks={{week}}&locale={{locale}}&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1
+GET {{menusBase}}&exclude=recipes.category%2Crecipes.nutrition%2Crecipes.steps&take=1
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept: {{jsonAccept}}

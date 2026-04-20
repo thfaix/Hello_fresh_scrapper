@@ -37,6 +37,24 @@ npm run extract -- --endpoint weeks --country LU --locale en-LU --brand hellofre
 npm run extract -- --endpoint menus --country LU --weeks 2026-W18 --locale en-LU --take 1
 ```
 
+### Fetch only the bearer token
+
+JSON payload:
+```bash
+npm run bearer
+```
+
+Raw token only:
+```bash
+npm run bearer -- --raw
+```
+
+Via the generic CLI:
+```bash
+npm run extract -- --endpoint bearer
+npm run extract -- --endpoint bearer -- --raw
+```
+
 ### Print curated parameter profiles
 
 ```bash
@@ -239,6 +257,23 @@ It contains:
 - filtered `menus` request by `product` and `productSku`
 - pagination example
 - `exclude` example
+
+It now also centralizes shared variables so the file is easier to maintain:
+- `@baseUrl`
+- `@country`
+- `@locale`
+- `@brand`
+- `@week`
+- `@token`
+- `@jsonAccept`
+- `@plansPage`
+- `@weeksPath`
+- `@weeksCountryOnlyPath`
+- `@menusBase`
+
+That means most requests now reuse `{{menusBase}}` or `{{weeksPath}}` instead of repeating the full URL and repeated params.
+
+## Notes
 
 - this is **not** an official public API
 - the SSR token may be ephemeral

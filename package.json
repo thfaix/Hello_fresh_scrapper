@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node --test",
     "extract": "node src/cli.js",
+    "bearer": "node src/get-bearer.js",
     "generate:http": "node src/generate-http-file.js"
   }
 }

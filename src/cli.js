@@ -6,6 +6,7 @@ import {
   fetchJson,
   fetchPageHtml,
 } from './extractor.js';
+import { extractBearerToken, formatBearerOutput } from './bearer.js';
 import { renderHttpFile } from './http-template.js';
 import { getKnownParameterProfiles } from './profiles.js';
 import { getKnownResponseShapes } from './response-shapes.js';
@@ -14,6 +15,7 @@ function parseArgs(argv) {
   const args = {
     page: 'https://www.hellofresh.lu/plans',
     endpoint: 'bootstrap',
+    raw: false,
     country: undefined,
     locale: undefined,
     brand: undefined,
@@ -33,6 +35,11 @@ function parseArgs(argv) {
     }
 
     const key = current.slice(2);
+    if (key === 'raw') {
+      args.raw = true;
+      continue;
+    }
+
     const value = argv[index + 1];
     args[key] = value;
     index += 1;
@@ -43,21 +50,6 @@ function parseArgs(argv) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const html = await fetchPageHtml(args.page);
-  const bootstrap = extractServerBootstrap(html);
-
-  if (args.endpoint === 'bootstrap') {
-    console.log(JSON.stringify({
-      page: args.page,
-      serverAuth: {
-        tokenType: bootstrap.serverAuth.tokenType,
-        hasAccessToken: Boolean(bootstrap.serverAuth.accessToken),
-      },
-      internalRewrites: bootstrap.internalRewrites,
-      gatewayRoutes: bootstrap.gatewayRoutes,
-    }, null, 2));
-    return;
-  }
 
   if (args.endpoint === 'profiles') {
     console.log(JSON.stringify(getKnownParameterProfiles(), null, 2));
@@ -71,6 +63,29 @@ async function main() {
 
   if (args.endpoint === 'http') {
     console.log(renderHttpFile());
+    return;
+  }
+
+  const html = await fetchPageHtml(args.page);
+
+  if (args.endpoint === 'bearer') {
+    const payload = extractBearerToken(html, args.page);
+    console.log(formatBearerOutput(payload, { raw: args.raw }));
+    return;
+  }
+
+  const bootstrap = extractServerBootstrap(html);
+
+  if (args.endpoint === 'bootstrap') {
+    console.log(JSON.stringify({
+      page: args.page,
+      serverAuth: {
+        tokenType: bootstrap.serverAuth.tokenType,
+        hasAccessToken: Boolean(bootstrap.serverAuth.accessToken),
+      },
+      internalRewrites: bootstrap.internalRewrites,
+      gatewayRoutes: bootstrap.gatewayRoutes,
+    }, null, 2));
     return;
   }
 
