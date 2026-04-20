@@ -28,13 +28,13 @@ npm run extract -- --endpoint bootstrap
 ### Fetch available weeks
 
 ```bash
-npm run extract -- --endpoint weeks --country US --locale en-US --brand hellofresh
+npm run extract -- --endpoint weeks --country LU --locale en-LU --brand hellofresh
 ```
 
 ### Fetch menus
 
 ```bash
-npm run extract -- --endpoint menus --country US --weeks 2026-W18 --locale en-US --take 1
+npm run extract -- --endpoint menus --country LU --weeks 2026-W18 --locale en-LU --take 1
 ```
 
 ### Print curated parameter profiles
@@ -66,11 +66,11 @@ Generated file:
 Observed behavior:
 
 - no query params → `200`, but `{"weeks":[]}`
-- `country=US` → `200`, returns populated weeks
-- `locale=en-US` alone → `200`, but still empty
+- `country=LU` → `200`, returns populated weeks
+- `locale=en-LU` alone → `200`, but still empty
 - `brand=hellofresh` alone → `200`, but still empty
-- `country=US&locale=en-US` → populated
-- `country=US&brand=hellofresh` → populated
+- `country=LU&locale=en-LU` → populated
+- `country=LU&brand=hellofresh` → populated
 - `country=DE&locale=de-DE` → populated in live test
 - `country` is the practical minimum useful param
 
@@ -85,7 +85,7 @@ Parameter profile:
 Recommended form:
 
 ```text
-/gw/menus-service/weeks?country=US&locale=en-US&brand=hellofresh
+/gw/menus-service/weeks?country=LU&locale=en-LU&brand=hellofresh
 ```
 
 ## `/gw/menus-service/menus`
@@ -93,15 +93,15 @@ Recommended form:
 Observed behavior:
 
 - no `country` → `400` with `country cannot be empty`
-- `country=US` alone → `200`, huge mixed result set across weeks/products (`total=7189` in the live probe)
+- `country=LU` alone → `200`, huge mixed result set across weeks/products (`total=7189` in the live probe)
 - `weeks=2026-W18` narrows results to one week (`total=15` in the live probe)
-- `locale=en-US` is accepted
+- `locale=en-LU` is accepted
 - `brand=hellofresh` is accepted
 - `take` works for pagination / limiting
 - `skip` works for pagination offset
 - `product=classic-menu` works and narrows to the matching menu family
 - `products=classic-menu` also works in the same way in live tests
-- `productSku=US-CB-3-2-0` works and narrows to matching items
+- `productSku=LU-CB-3-2-0` works and narrows to matching items
 - `exclude=recipes.category,recipes.nutrition,recipes.steps` is accepted, but in current live checks those nested recipe fields still appeared in the payload
 - `product=family` and `products=family` returned empty result sets in the tested week
 
@@ -123,13 +123,13 @@ Parameter profile:
 Recommended form:
 
 ```text
-/gw/menus-service/menus?country=US&weeks=2026-W18&locale=en-US&take=1
+/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&take=1
 ```
 
 More selective example:
 
 ```text
-/gw/menus-service/menus?country=US&weeks=2026-W18&locale=en-US&product=classic-menu&productSku=US-CB-3-2-0&take=1
+/gw/menus-service/menus?country=LU&weeks=2026-W18&locale=en-LU&product=classic-menu&productSku=LU-CB-3-2-0&take=1
 ```
 
 ## Observed response shapes
